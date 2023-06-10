@@ -25,6 +25,11 @@
 <script src="/js/lib/highlight.js"></script>
 
 
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.js"></script>
+<script src="https://cdn.staticfile.org/KaTeX/0.16.4/contrib/auto-render.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/KaTeX/0.16.4/katex.min.css" />
+<script src="/js/lib/math.js"></script>
+
 
 <script src="/js/lib/preview.js"></script>
 
@@ -165,7 +170,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E6%AC%A3%E5%96%9C%E8%8B%A5%E7%8B%82/" style="color: #00bcd4">欣喜若狂</a>
+                <a href="/tags/%E6%AC%A3%E5%96%9C%E8%8B%A5%E7%8B%82/" style="color: #ffa2c4">欣喜若狂</a>
             </span>
             
         </span>
@@ -185,8 +190,9 @@
 <p>3</p>
 <p>4</p>
 <p>5</p>
-<p>等下去研究一下</p>
+<p>等下去研究一下<font color="#92cafa" size="4"><strong>（当天：已经知道了，只要在需要缩略的地方写上&lt;!– more –&gt;就好了，或者在开头的Front-Matter里写上：description: 预览能看到的内容）</strong></font></p>
 <p>先去学习markdown语法去</p>
+<p>​	</p>
 <p>话说这里面有小表情吗⊙(・◇・)？</p>
 <hr>
 <p>好像有时候更新不会及时同步</p>
@@ -197,6 +203,65 @@
 <hr>
 <hr>
 <h1 id="想了一想还是在这里练习markdown语法吧"><a href="#想了一想还是在这里练习markdown语法吧" class="headerlink" title="想了一想还是在这里练习markdown语法吧"></a>想了一想还是在这里练习markdown语法吧</h1><p>（我是前端小白，只是略微知道一点html与css语法然而卵全不会用）</p>
+<hr>
+<p>怎么改字体颜色呀</p>
+<pre><code class="html">&lt;font color=red&gt;我是红色&lt;/font&gt;
+&lt;font color=#008000&gt;我是绿色&lt;/font&gt;
+&lt;font color=yellow&gt;我是黄色&lt;/font&gt;
+&lt;font color=Blue&gt;我是蓝色&lt;/font&gt;
+&lt;font color= #871F78&gt;我是紫色&lt;/font&gt;
+&lt;font color= #DCDCDC&gt;我是浅灰色&lt;/font&gt;
+&lt;font size=5&gt;我是尺寸&lt;/font&gt;
+&lt;font face=&quot;逐浪立楷&quot; color=green size=10&gt;我是逐浪立楷，绿色，尺寸为5&lt;/font&gt;
+</code></pre>
+<p><font color="red">我是红色</font><br><font color="#008000">我是绿色</font><br><font color="yellow">我是黄色</font><br><font color="Blue">我是蓝色</font><br><font color="#871F78">我是紫色</font><br><font color="#DCDCDC">我是浅灰色</font><br><font size="5">我是尺寸</font><br><font face="逐浪立楷" color="green" size="10">我是逐浪立楷，绿色，尺寸为5</font></p>
+<hr>
+<p><strong>空白行：</strong>&lt;br&gt;</p>
+<p>你们有没有发现</p>
+<br>
+
+<p>夏天真的比冬天热很多</p>
+<hr>
+<p>啥都不懂呀现在，网页的格式还有想要的功能都不会实现，先原谅一回吧</p>
+<hr>
+<p><strong>代码语法测试：</strong></p>
+<p>这是New Bing生成的一段代码：</p>
+<p>你好，这是Bing。我可以尝试帮你写一段控制角色移动的C#代码。你可以参考以下代码，它使用了<strong>Rigidbody</strong>组件和<strong>Input</strong>类来获取用户的输入，并根据移动方向和速度更新角色的位置(<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/67965706/unity-rigidbody)%E3%80%82%E4%BD%A0%E5%8F%AF%E4%BB%A5%E6%A0%B9%E6%8D%AE%E4%BD%A0%E7%9A%84%E9%9C%80%E6%B1%82%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E5%8F%82%E6%95%B0%E5%92%8C%E9%80%BB%E8%BE%91%E3%80%82">https://stackoverflow.com/questions/67965706/unity-rigidbody)。你可以根据你的需求修改代码中的参数和逻辑。</a></p>
+<pre><code class="c#">using UnityEngine;
+
+public class CharacterMovement : MonoBehaviour
+&#123;
+    // 移动速度
+    public float speed = 5f;
+    // 移动方向
+    private Vector3 direction;
+    // 刚体组件
+    private Rigidbody rb;
+
+    void Start()
+    &#123;
+        // 获取刚体组件
+        rb = GetComponent&lt;Rigidbody&gt;();
+    &#125;
+
+    void Update()
+    &#123;
+        // 获取水平和垂直方向的输入
+        float horizontal = Input.GetAxis(&quot;Horizontal&quot;);
+        float vertical = Input.GetAxis(&quot;Vertical&quot;);
+        // 计算移动方向
+        direction = new Vector3(horizontal, 0, vertical).normalized;
+    &#125;
+
+    void FixedUpdate()
+    &#123;
+        // 根据移动方向和速度更新刚体的位置
+        rb.MovePosition(transform.position + direction * speed * Time.fixedDeltaTime);
+    &#125;
+&#125;
+</code></pre>
+<hr>
+<p>下次就从这里开始写吧</p>
 
     </div>
     
@@ -212,7 +277,7 @@
     <div id="footer-wrap">
         <div>
             &copy;
-            2022 - 2023 ZaroMeow
+            2023 - 2023 ZaroMeow
             <span id="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
