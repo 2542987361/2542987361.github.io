@@ -3,7 +3,7 @@
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8" />
-        <title>Tags: 测试 | ZaroMeow</title>
+        <title>Unity小案例：“跳一跳”小游戏的简单实现 | ZaroMeow</title>
         <meta name="author" content="Zaromeow" />
         <meta name="description" content="自由自在，没有烦恼" />
         <meta name="keywords" content="" />
@@ -32,6 +32,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -146,72 +150,130 @@
 
             <transition name="into">
                 <div id="main" v-show="!loading">
-                    <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        <span>
-            <a href="/tags/Unity/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                Unity
-            </a>
+                    <div class="article">
+    <div>
+        <h1>Unity小案例：“跳一跳”小游戏的简单实现</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/6/12
         </span>
         
         
-        
-        <span>
-            <a href="/tags/%E6%B5%8B%E8%AF%95/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                测试
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/Unity/" style="color: #ffa2c4">Unity</a>
+            </span>
+            
         </span>
-        
-        
-        
-        
-        
-        <span>
-            <a href="/tags/%E6%AC%A3%E5%96%9C%E8%8B%A5%E7%8B%82/" style="background: #03a9f4">
-                <span class="icon">
-                    <i class="fa-solid fa-tags fa-fw"></i>
-                </span>
-                欣喜若狂
-            </a>
-        </span>
-        
         
     </div>
     
-    <div class="timeline">
-        <div class="timeline-tail"></div>
-        <div class="timeline-content">
-            <div class="item-time">2023/6/10</div>
-            <a href="/2023/06/10/%E6%B5%8B%E8%AF%95%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/">
-                <h3>测试显示图片问题</h3>
-            </a>
-            <div class="info">
-                
-                
-                <span class="tags">
-                    <span class="icon">
-                        <i class="fa-solid fa-tags fa-fw"></i>
-                    </span>
-                    
-                    <span class="tag">
-                        
-                        <a href="/tags/%E6%B5%8B%E8%AF%95/" style="color: #00bcd4">测试</a>
-                    </span>
-                    
-                </span>
-                
-            </div>
-        </div>
+    <div class="content" v-pre>
+        <p>从这篇开始，我要把一些做过的unity小案例搬到这上面来^_^</p>
+<hr>
+<hr>
+<p>一个模仿微信跳一跳小游戏的案例，其实是照着b站的视频做的，但是原视频是在找不到了，这里只能不贴了<del>其实是学姐偷懒找我帮做的结课作业</del></p>
+<details>
+<summary>点击查看详细内容</summary>
+展开的内容
+</details>
+
+<pre><code class="C#">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class PlayerControl : MonoBehaviour
+&#123;
+    Rigidbody rb;
+    float timer;
+    public float maxChargeTime;
+    public float jumpPower;
+
+    public bool doJump;
+    public bool isGround;
+
+    void Start()
+    &#123;
+        rb = GetComponent&lt;Rigidbody&gt;();
+    &#125;
+
+    void Update()
+    &#123;
+        if (Input.GetKey(KeyCode.Mouse0) &amp;&amp; timer &lt; maxChargeTime)
+        &#123;
+            timer += Time.deltaTime;
+            transform.localScale = new Vector3(1, 0.5f + (maxChargeTime - timer) / (2 * maxChargeTime), 1);
+        &#125;
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        &#123;
+            doJump = true;
+            transform.localScale = Vector3.one;
+        &#125;
+
+        if(transform.position.y&lt;-0.5f)
+        &#123;
+            GameManage.S.gameOver = true;
+        &#125;
+    &#125;
+
+    void FixedUpdate()
+    &#123;
+        if (doJump &amp;&amp; isGround)
+        &#123;
+            Jump();
+            doJump = false;
+            isGround = false;
+            timer = 0;
+        &#125;
+    &#125;
+
+    void Jump()
+    &#123;
+        Vector3 dir;
+        if (GameManage.S.playerIsFacingYAxis)
+        &#123;
+            dir = transform.forward;
+        &#125;
+        else
+        &#123;
+            dir = -transform.right;
+        &#125;
+        dir.y = 1;
+        rb.velocity = dir * timer * jumpPower;
+    &#125;
+
+    void OnCollisionEnter(Collision collision)
+    &#123;
+        if (collision.gameObject.CompareTag(&quot;Ground&quot;))
+        &#123;
+            if (collision.contacts[0].normal == Vector3.up)
+            &#123;
+                isGround = true;
+                GameManage.S.HitGround(transform.position);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+
     </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -244,6 +306,12 @@
             
         </div>
         <script src="/js/main.js"></script>
+        
+        
+
+
+
+
         
     </body>
 </html>

@@ -169,6 +169,132 @@
         
 
 <div class="post">
+    <a href="/2023/06/12/Unity%E5%B0%8F%E6%A1%88%E4%BE%8B%EF%BC%9A%E2%80%9C%E8%B7%B3%E4%B8%80%E8%B7%B3%E2%80%9D%E5%B0%8F%E6%B8%B8%E6%88%8F%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/">
+        <h2 class="post-title">Unity小案例：“跳一跳”小游戏的简单实现</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/6/12
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>从这篇开始，我要把一些做过的unity小案例搬到这上面来^_^</p>
+<hr>
+<hr>
+<p>一个模仿微信跳一跳小游戏的案例，其实是照着b站的视频做的，但是原视频是在找不到了，这里只能不贴了<del>其实是学姐偷懒找我帮做的结课作业</del></p>
+<details>
+<summary>点击查看详细内容</summary>
+展开的内容
+</details>
+
+<pre><code class="C#">using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class PlayerControl : MonoBehaviour
+&#123;
+    Rigidbody rb;
+    float timer;
+    public float maxChargeTime;
+    public float jumpPower;
+
+    public bool doJump;
+    public bool isGround;
+
+    void Start()
+    &#123;
+        rb = GetComponent&lt;Rigidbody&gt;();
+    &#125;
+
+    void Update()
+    &#123;
+        if (Input.GetKey(KeyCode.Mouse0) &amp;&amp; timer &lt; maxChargeTime)
+        &#123;
+            timer += Time.deltaTime;
+            transform.localScale = new Vector3(1, 0.5f + (maxChargeTime - timer) / (2 * maxChargeTime), 1);
+        &#125;
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        &#123;
+            doJump = true;
+            transform.localScale = Vector3.one;
+        &#125;
+
+        if(transform.position.y&lt;-0.5f)
+        &#123;
+            GameManage.S.gameOver = true;
+        &#125;
+    &#125;
+
+    void FixedUpdate()
+    &#123;
+        if (doJump &amp;&amp; isGround)
+        &#123;
+            Jump();
+            doJump = false;
+            isGround = false;
+            timer = 0;
+        &#125;
+    &#125;
+
+    void Jump()
+    &#123;
+        Vector3 dir;
+        if (GameManage.S.playerIsFacingYAxis)
+        &#123;
+            dir = transform.forward;
+        &#125;
+        else
+        &#123;
+            dir = -transform.right;
+        &#125;
+        dir.y = 1;
+        rb.velocity = dir * timer * jumpPower;
+    &#125;
+
+    void OnCollisionEnter(Collision collision)
+    &#123;
+        if (collision.gameObject.CompareTag(&quot;Ground&quot;))
+        &#123;
+            if (collision.contacts[0].normal == Vector3.up)
+            &#123;
+                isGround = true;
+                GameManage.S.HitGround(transform.position);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Unity/" style="color: #ffa2c4">Unity</a>
+        </span>
+        
+    </div>
+    <a href="/2023/06/12/Unity%E5%B0%8F%E6%A1%88%E4%BE%8B%EF%BC%9A%E2%80%9C%E8%B7%B3%E4%B8%80%E8%B7%B3%E2%80%9D%E5%B0%8F%E6%B8%B8%E6%88%8F%E7%9A%84%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/06/10/%E6%B5%8B%E8%AF%95%E6%98%BE%E7%A4%BA%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/">
         <h2 class="post-title">测试显示图片问题</h2>
     </a>
@@ -238,7 +364,7 @@
         
         <span class="tag">
             
-            <a href="/tags/%E6%AC%A3%E5%96%9C%E8%8B%A5%E7%8B%82/" style="color: #ff7d73">欣喜若狂</a>
+            <a href="/tags/%E6%AC%A3%E5%96%9C%E8%8B%A5%E7%8B%82/" style="color: #03a9f4">欣喜若狂</a>
         </span>
         
     </div>
